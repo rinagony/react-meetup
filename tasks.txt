@@ -1,4 +1,0 @@
-1) Upload images to database and get images
-2) Change css styling
-3) Create page My events
-4) Add LoacalStorage for store data from Favorites and My events
