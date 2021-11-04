@@ -1,0 +1,91 @@
+.header {
+    width: 100%;
+    height: 5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #482246;
+    padding: 0 10%;
+}
+
+.logo {
+    font-size: 1.5rem;
+    color: white;
+    font-weight: bold;
+}
+
+.header ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: baseline;
+}
+
+.header li {
+    margin-left: 2em;
+    color: #fcb8d2;
+}
+
+.header a {
+    text-decoration: none;
+    color: #ffd4e5;
+    font-size: 15px;
+}
+
+.header a:hover, .header a:active, .header a.active {
+    color: white;
+}
+
+.badge {
+    background-color: #cc2062;
+    color: white;
+    border-radius: 12px;
+    padding: 0 1rem;
+    margin-left: 0.5rem;
+}
+
+.dropbtn {
+    color:  #ffd4e5;
+    background: inherit;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdownContent {
+    display: none;
+    position: absolute;
+    min-width: fit-content;
+    z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdownContent a {
+    color: #fcb8d2;
+    background-color: #482246;
+    white-space: nowrap;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdownContent {display: block;}
+
+
+.btnLogOut {
+    background: #cc2062;
+    color: #fff;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 16px;
+}

@@ -1,0 +1,17 @@
+.imageUser {
+    border-radius: 50%;
+    width: 70px;
+    height: 70px;
+    margin-right: 1em;
+}
+
+.userItem {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-top: 2em;
+}
+
+.nameItem {
+    margin-right: 0.3em;
+}

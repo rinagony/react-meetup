@@ -1,0 +1,137 @@
+.block {}
+
+.wrapperTopBlock {
+    display: flex;
+    justify-content: space-between;
+}
+
+.wrapperTopBlock img {
+    max-width: 500px;
+}
+
+.itemTimeWrapper {
+    display: flex;
+    width: fit-content;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+h2 {
+    text-align: center;
+    margin-top: 1.5em;
+    margin-bottom: 2em;
+    font-size: 30px;
+}
+
+.wrapperItemInfo p {
+    margin: 0;
+}
+
+.wrapperItemInfo {
+    padding: 15px;
+    border-bottom: 3px solid #ffebf3;
+    border-left: 2px solid #ffebf3;
+}
+
+.itemTimeWrapper .wrapperItemInfo:last-child {
+    border-bottom: none;
+}
+
+h4 {
+    font-size: 15px;
+    margin-top: 0;
+    margin-bottom: 10px;
+    margin-right: 0;
+    margin-left: 0;
+    color: ivory;
+}
+
+.wrapperItemInfo p {
+    color: ivory;
+}
+
+.wrapperDescription {
+    margin-top: 3em;
+    padding: 1em 0;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 3px solid #ffcde0;
+}
+
+.wrapperDescription button {
+    font: inherit;
+    cursor: pointer;
+    color: #77002e;
+    border: 1px solid #77002e;
+    background-color: transparent;
+    padding: 0.5rem 1.5rem;
+    border-radius: 4px;
+}
+
+.wrapperDescription button:hover, .wrapperDescription button:active {
+    background-color: #ffe2ed;
+}
+
+.wrapperItemInfo svg {
+    color: #fff;
+    margin-right: 15px;
+    font-size: 20px;
+}
+
+.wrapperItemInfo p {
+    display: inline-block;
+    max-width: 16em;
+}
+
+.wrapperButtons {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: flex-end;
+    min-width: 230px;
+}
+
+.wrapperButtons button {
+    white-space: nowrap;
+    margin-left: 1.5em;
+    margin-bottom: 1em;
+}
+
+.wrapperImageMeeting {
+    width: 100%;
+    height: 18em;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.wrapperUserInfo {
+    display: flex;
+}
+
+.wrapperContactUser {
+    margin-top: 1.2em;
+}
+
+.wrapperNameUser {
+    display: flex;
+}
+
+.wrapperNameUser p {
+    font-size: 18px;
+}
+
+.wrapperUserInfo img {
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    margin-right: 1em;
+}
+
+.firstnameuser {
+    margin-right: 5px;
+}
+
+.wrapperContactUser {
+    display: flex;
+    justify-content: space-between;
+}
