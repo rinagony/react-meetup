@@ -102,6 +102,8 @@ h4 {
     height: 18em;
     display: flex;
     justify-content: flex-end;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .wrapperUserInfo {

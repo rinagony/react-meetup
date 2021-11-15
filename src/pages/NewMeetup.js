@@ -1,20 +1,18 @@
 import { useHistory } from "react-router";
 import NewMeetupForm from "../components/meetups/NewMeetupForm";
+import { useDispatch } from "react-redux";
+import { bindActionCreators } from "redux";
+import { actionCreators } from "../state/index";
 
 function NewMeetupPage() {
+  const dispatch = useDispatch();
+
+  const { newMeetup } = bindActionCreators(actionCreators, dispatch);
 
   const history = useHistory();
   function addMeetupHandler(meetupData) {
-    //get data from the child
-    fetch("https://meetup-67602-default-rtdb.firebaseio.com/meetups.json", {
-      method: "POST",
-      body: JSON.stringify(meetupData),
-      headers: {
-        "Content-type": "application/json",
-      },
-    }).then(() => {
-      history.replace("/"); //go back to home page after request has completed
-    }); //send request to database
+    newMeetup(meetupData);
+    history.replace("/");
   }
 
   return (

@@ -1,45 +1,29 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import MeetupList from "../components/meetups/MeetupList";
+import { connect } from "react-redux";
+import Loader from "../components/ui/Loader";
 
-function AllMeetupsPage() {
-  const [isLoading, setIsLoading] = useState(true);
-  const [loadedMeetups, setLoadedMeetups] = useState([]);
+function AllMeetupsPage(props) {
 
-  useEffect(() => {
-    //useeefect helps to do code only once. it helps from loop
-    setIsLoading(true);
-    fetch("https://meetup-67602-default-rtdb.firebaseio.com/meetups.json")
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        const meetups = [];
-        for (const key in data) {
-          const meetup = {
-            id: key,
-            ...data[key],
-          };
-          meetups.push(meetup);
-        }
-        setIsLoading(false);
-        setLoadedMeetups(meetups);
-        console.log(loadedMeetups);
-      }); //send get request to database
-  }, []); //render only first time thankful to useeffect
-
-  if (isLoading) {
+  if (!props.meetings) {
     return (
-      <section>
-        <p>Loading...</p>
-      </section>
+      <Loader />
     );
   }
+
   return (
+    props.meetings ? 
     <section>
       <h1>All meetups</h1>
-      <MeetupList meetups={loadedMeetups} />
+      <MeetupList meetups={props.meetings} />
     </section>
+    : <p>Error</p>
   );
 }
 
-export default AllMeetupsPage;
+const mapStateToProps = (state) => {
+  return {
+    meetings: state.meetups.meetips,
+  };
+};
+export default connect(mapStateToProps)(AllMeetupsPage);

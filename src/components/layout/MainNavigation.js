@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import classes from "./MainNavigation.module.css";
 import { useContext } from "react";
-import PropTypes from "prop-types";
 
 import FavoritesContext from "../../store/favorites-context";
 import GoingContext from "../../store/iamgoing-context";
@@ -75,7 +74,7 @@ function MainNavigation(props) {
               <button className={classes.dropbtn}>Settings</button>
               <div className={classes.dropdownContent}>
                 <Link to={`/myaccount`}>My account</Link>
-                <Link to={`/myaccount`}>Settings</Link>
+                <Link to={`/settings`}>Settings</Link>
               </div>
             </div>
           </li>

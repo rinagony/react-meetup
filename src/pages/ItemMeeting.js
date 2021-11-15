@@ -9,65 +9,36 @@ import { useContext } from "react";
 import favoritesContext from "../store/favorites-context";
 import GoingContext from "../store/iamgoing-context";
 
-function ItemMeeting(datas) {
-  const { id } = useParams();
-  const [isLoading, setIsLoading] = useState(true);
-  const [meetingItem, setMeeting] = useState({
-    title: "",
-    description: "",
-  });
+import { connect } from "react-redux";
 
+function ItemMeeting(props) {
   let stringPath = window.location.pathname;
   let hrefLocation = stringPath.replace("/", "");
+  const [meetingItem, setMeeting] = useState({});
 
   useEffect(() => {
-    //useeefect helps to do code only once. it helps from loop
-    setIsLoading(true);
-    fetch("https://meetup-67602-default-rtdb.firebaseio.com/meetups.json")
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        const meetups = [];
-        for (const key in data) {
-          if (key == hrefLocation) {
-            const meetup = {
-              id: key,
-              ...data[key],
-            };
-            meetups.push(meetup);
-          }
-        }
-        setDataExact(meetups);
-        setIsLoading(false);
-      }); //send get request to database
-  }, []); //render only first time thankful to useeffect
+    for (let v in props.meetings) {
+      if (props.meetings[v].id == hrefLocation) {
+        console.log(props.meetings[v].user);
+        setMeeting((prevState) => ({
+          ...prevState,
+          title: props.meetings[v].title,
+          description: props.meetings[v].description,
+          image: props.meetings[v].image,
+          address: props.meetings[v].address,
+          date: props.meetings[v].date,
+          time: props.meetings[v].time,
+          datePublic: props.meetings[v].datePublic,
+          userName: props.meetings[v].user.name,
+          userPhoto: props.meetings[v].user.photo,
+          userLastName: props.meetings[v].user.lastName,
+          userPhone: props.meetings[v].user.phone,
+        }));
+      }
+    }
+  }, [props.meetings]); 
 
-  function setDataExact(meetups) {
-    let result = meetups.map((a) =>
-      setMeeting((prevState) => ({
-        ...prevState,
-        title: a.title,
-        description: a.description,
-        image: a.image,
-        address: a.address,
-        date: a.date,
-        time: a.time,
-        user: a.user,
-      }))
-    );
-    console.log(meetingItem);
-  }
-
-  const mystyle = {
-    background: `linear-gradient(
-      rgba(0, 0, 0, 0.5), 
-      rgba(0, 0, 0, 0.5)
-    ),
-    url(${meetingItem.image})`,
-    backgroundSize: "cover",
-    backgroundRepeat: "no-repeat",
-  };
+  const [isLoading, setIsLoading] = useState(false);
 
   const favoritesCtx = useContext(favoritesContext);
   const itemIsFavorites = favoritesCtx.itemIsFavorite(hrefLocation);
@@ -108,11 +79,16 @@ function ItemMeeting(datas) {
       </section>
     );
   }
+  
   return (
     <section className={classes.block}>
       <h2>{meetingItem.title}</h2>
       <div className={classes.wrapperTopBlock}>
-        <div style={mystyle} className={classes.wrapperImageMeeting}>
+        <div style={{background: `linear-gradient(
+      rgba(0, 0, 0, 0.5), 
+      rgba(0, 0, 0, 0.5)
+    ),
+    url(${meetingItem.image})`}} className={classes.wrapperImageMeeting}>
           <div className={classes.itemTimeWrapper}>
             <div className={classes.wrapperItemInfo}>
               <h4>Date for a Meeting:</h4>
@@ -141,20 +117,25 @@ function ItemMeeting(datas) {
             <div>
               <img
                 src={
-                  meetingItem.user.photo
-                    ? meetingItem.user.photo
+                  meetingItem.userPhoto
+                    ? meetingItem.userPhoto
                     : "https://www.cruzyortiz.com/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png"
                 }
               />
             </div>
             <div className={classes.wrapperNameUser}>
-              <p className={classes.firstnameuser}>{meetingItem.user.name}</p>
-              <p>{meetingItem.user.lastName}</p>
+              <p className={classes.firstnameuser}>{meetingItem.userName}</p>
+              <p>{meetingItem.userLastName}</p>
             </div>
           </div>
         </div>
         <div>
           <p>Contact details:</p>
+          <p>{meetingItem.userPhone}</p>
+        </div>
+        <div>
+          <p>Date of publication:</p>
+          <p>{meetingItem.datePublic}</p>
         </div>
       </div>
       <div className={classes.wrapperDescription}>
@@ -174,4 +155,10 @@ function ItemMeeting(datas) {
   );
 }
 
-export default ItemMeeting;
+const mapStateToProps = (state) => {
+  return {
+    meetings: state.meetups.meetips,
+  };
+};
+
+export default connect(mapStateToProps)(ItemMeeting);

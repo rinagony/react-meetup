@@ -138,3 +138,25 @@ a {
 .wrapperModal {
   background: #333333;
 }
+
+.backBtn {
+  background: inherit;
+  border: none;
+  color: #cc2062;
+  font-weight: 600;
+  font-size: 25px;
+  cursor: pointer;
+}
+
+.backBtn:hover {
+  color: #000;
+  transition: 0.5s;
+}
+
+.wrapperEmptyFav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10%;
+  flex-direction: column;
+}

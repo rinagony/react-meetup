@@ -1,0 +1,26 @@
+.light {
+    background-image: url('../images/light.jpg');
+    height: 10em;
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 30%;
+    cursor: pointer;
+    border: 3px solid #000;
+}
+
+.dark {
+    background-image: url('../images/dark.jpg');
+    height: 10em;
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 30%;
+    cursor: pointer;
+    border: 3px solid #000;
+}
+
+.wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 4em;
+}

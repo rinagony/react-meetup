@@ -7,7 +7,6 @@ import firebase from "firebase/compat/app";
 import { getDatabase, ref, set } from "firebase/database";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 
-
 function NewMeetupForm(props) {
   let [userName, setUsername] = useState("");
   let [userLastName, setUserLastname] = useState("");
@@ -58,10 +57,13 @@ function NewMeetupForm(props) {
   const addressInputRef = useRef();
   const descriptionInputRef = useRef();
   const dateInputRef = useRef();
+  const phoneInputRef = useRef();
   const timeInputRef = useRef();
 
   function submitHandler(event) {
     event.preventDefault();
+
+    const currentdate = new Date();
 
     const enteredTitle = titleInputRef.current.value;
     const enteredImage = imageInputRef.current.value;
@@ -69,21 +71,36 @@ function NewMeetupForm(props) {
     const enteredDescription = descriptionInputRef.current.value;
     const enteredTime = timeInputRef.current.value;
     const enteredDate = dateInputRef.current.value;
+    const phoneNumber = phoneInputRef.current.value;
+    const dateCurrent =
+      currentdate.getDate() +
+      "/" +
+      (currentdate.getMonth() + 1) +
+      "/" +
+      currentdate.getFullYear() +
+      " @ " +
+      currentdate.getHours() +
+      ":" +
+      currentdate.getMinutes() +
+      ":" +
+      currentdate.getSeconds();
 
     const meetupData = {
       user: {
         name: userName,
         lastName: userLastName,
-        photo: userPhoto
+        photo: userPhoto,
+        phone: phoneNumber,
       },
       title: enteredTitle,
       image: enteredImage,
       address: enteredAddress,
       description: enteredDescription,
       time: enteredTime,
-      date: enteredDate
+      date: enteredDate,
+      datePublic: dateCurrent,
     };
-
+    
     props.onAddMeetup(meetupData); //send data to parent
   }
 
@@ -91,27 +108,43 @@ function NewMeetupForm(props) {
     <Card>
       <form className={classes.form} onSubmit={submitHandler}>
         <div className={classes.control}>
-          <label for="title">Meetup Title</label>
+          <label htmlFor="title">Meetup Title</label>
           <input type="text" required id="title" ref={titleInputRef} />
         </div>
         <div className={classes.control}>
-          <label for="start">Date for your Meetup:</label>
-          <input type="date" id="start" name="trip-start" required ref={dateInputRef}/>
+          <label htmlFor="start">Date for your Meetup:</label>
+          <input
+            type="date"
+            id="start"
+            name="trip-start"
+            required
+            ref={dateInputRef}
+          />
         </div>
         <div className={classes.control}>
-          <label for="appt">Time for your Meetup:</label>
-          <input type="time" id="appt" name="appt" required ref={timeInputRef}></input>
+          <label htmlFor="appt">Time for your Meetup:</label>
+          <input
+            type="time"
+            id="appt"
+            name="appt"
+            required
+            ref={timeInputRef}
+          ></input>
         </div>
         <div className={classes.control}>
-          <label for="image">Meetup Image (URL)</label>
+          <label htmlFor="image">Meetup Image (URL)</label>
           <input type="url" required id="image" ref={imageInputRef} />
         </div>
         <div className={classes.control}>
-          <label for="address">Meetup Address</label>
+          <label htmlFor="address">Meetup Address</label>
           <input type="text" required id="address" ref={addressInputRef} />
         </div>
         <div className={classes.control}>
-          <label for="description">Meetup Description</label>
+          <label htmlFor="address">Phone number</label>
+          <input type="phone" required id="phone" ref={phoneInputRef} />
+        </div>
+        <div className={classes.control}>
+          <label htmlFor="description">Meetup Description</label>
           <textarea
             rows="5"
             required

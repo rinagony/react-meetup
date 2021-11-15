@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 import favoritesContext from "../../store/favorites-context";
 
 function MeetupItem(props) {
-
   const favoritesCtx = useContext(favoritesContext);
   const itemIsFavorites = favoritesCtx.itemIsFavorite(props.id);
   function toggleFavoriteStatusHandler() {

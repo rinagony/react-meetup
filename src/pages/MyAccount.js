@@ -4,25 +4,10 @@ import classes from "./MyAccount.module.css";
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import { getDatabase, ref, set } from "firebase/database";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { connect } from "react-redux";
+import Loader from "../components/ui/Loader";
 
-function MyAccount() {
-  const [loadedUsers, setLoadedUsers] = useState([]);
-  const firebaseConfig = {
-    apiKey: "AIzaSyAo3DBB-GThtgoOLdCJ44_6besiBr0ijTM",
-    authDomain: "meetup-67602.firebaseapp.com",
-    databaseURL: "https://meetup-67602-default-rtdb.firebaseio.com",
-    projectId: "meetup-67602",
-    storageBucket: "meetup-67602.appspot.com",
-    messagingSenderId: "704763914024",
-    appId: "1:704763914024:web:cd40972252c7ed5647d21d",
-    measurementId: "G-JCTL8EN83V",
-  };
-
-  // Initialize Firebase
-  const app = firebase.initializeApp(firebaseConfig);
-  // const auth = getAuth();
-
+function MyAccount(props) {
   const nameInputRef = useRef();
   const lastNameInputRef = useRef();
   const myPhotoRef = useRef();
@@ -40,24 +25,17 @@ function MyAccount() {
       }
     });
 
-    fetch("https://meetup-67602-default-rtdb.firebaseio.com/users.json")
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        const users = [];
-        for (const key in data) {
-          const user = {
-            id: key,
-            ...data[key],
-          };
-          users.push(user);
-        }
-        console.log(users);
-        findCurrentUser(users);
-        setLoadedUsers(users);
-      }); //send get request to database
-  }, []); //render only first time thankful to useeffect
+    const users = [];
+    for (const key in props.users) {
+      const user = {
+        id: key,
+        ...props.users[key],
+      };
+      users.push(user);
+    }
+    console.log(users);
+    findCurrentUser(users);
+  }, [props.users]);
 
   function findCurrentUser(users) {
     let uidUser = localStorage.getItem("useruid");
@@ -72,22 +50,6 @@ function MyAccount() {
         setUserPhoto(users[i].photo);
       }
     }
-  }
-
-  function unaibleInput() {
-    setEditInput(true);
-  }
-
-  function onAccountChange(value) {
-    setUserPhoto(value);
-  }
-
-  function onAccountChangeLastName(value) {
-    setUserLastname(value);
-  }
-
-  function onAccountChangeName(value) {
-    setUsername(value);
   }
 
   function submitForm(event) {
@@ -112,26 +74,16 @@ function MyAccount() {
       .catch((error) => {
         console.log(error);
       });
+  }
 
-    // fetch("https://meetup-67602-default-rtdb.firebaseio.com/users.json", {
-    //   method: "POST",
-    //   body: JSON.stringify(datauser),
-    //   headers: {
-    //     "Content-type": "application/json",
-    //   },
-    // }).then(() => {
-    //   setDataChanged(true);
-    // });
-
-    // localStorage.setItem("userName", enteredTitle);
-    // localStorage.setItem("userLastName", enteredlastName);
-    // localStorage.setItem("userPhoto", enteredPhoto);
+  if (!props.users) {
+    return <Loader />;
   }
   return (
     <div>
       <h1>My Account</h1>
       {!editInput ? (
-        <button className={classes.buttonEdit} onClick={unaibleInput}>
+        <button className={classes.buttonEdit} onClick={setEditInput(true)}>
           Edit
         </button>
       ) : null}
@@ -149,7 +101,7 @@ function MyAccount() {
             type="text"
             required
             value={userName}
-            onChange={(e) => onAccountChangeName(e.target.value)}
+            onChange={(e) => setUsername(e.target.value)}
           />
         </div>
 
@@ -160,7 +112,7 @@ function MyAccount() {
             disabled={!editInput ? "disabled" : ""}
             ref={lastNameInputRef}
             id="myLastName"
-            onChange={(e) => onAccountChangeLastName(e.target.value)}
+            onChange={(e) => setUserLastname(e.target.value)}
             required
             type="text"
             value={userLastName}
@@ -183,7 +135,7 @@ function MyAccount() {
               className={editInput ? classes.banner : classes.active}
               type="text"
               id="myPhoto"
-              onChange={(e) => onAccountChange(e.target.value)}
+              onChange={(e) => setUserPhoto(e.target.value)}
               value={userPhoto}
               placeholder={userPhoto ? userPhoto : null}
             />
@@ -199,4 +151,9 @@ function MyAccount() {
   );
 }
 
-export default MyAccount;
+const mapStateToProps = (state) => {
+  return {
+    users: state.users.users,
+  };
+};
+export default connect(mapStateToProps)(MyAccount);
